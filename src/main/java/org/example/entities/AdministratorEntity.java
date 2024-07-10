@@ -2,6 +2,8 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "administrators")
 public class AdministratorEntity {
@@ -9,6 +11,18 @@ public class AdministratorEntity {
     private String name;
     private String surname;
     private String phoneNumber;
+    private List<BookingEntity> bookingEntityList;
+
+    public AdministratorEntity(Long id, String name, String surname, String phoneNumber, List<BookingEntity> bookingEntityList) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.bookingEntityList = bookingEntityList;
+    }
+
+    public AdministratorEntity() {
+    }
 
     @Id
     @SequenceGenerator(
@@ -50,5 +64,14 @@ public class AdministratorEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @OneToMany(mappedBy = "administratorEntity", fetch = FetchType.LAZY, cascade = CascadeType.DETACH, targetEntity = BookingEntity.class)
+    public List<BookingEntity> getBookingEntityList() {
+        return bookingEntityList;
+    }
+
+    public void setBookingEntityList(List<BookingEntity> bookingEntityList) {
+        this.bookingEntityList = bookingEntityList;
     }
 }

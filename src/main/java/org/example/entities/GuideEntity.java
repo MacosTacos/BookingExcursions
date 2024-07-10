@@ -13,6 +13,17 @@ public class GuideEntity {
     private String phoneNumber;
     private List<ExcursionEntity> excursionEntityList;
 
+    public GuideEntity(Long id, String name, String surname, String phoneNumber, List<ExcursionEntity> excursionEntityList) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.excursionEntityList = excursionEntityList;
+    }
+
+    public GuideEntity() {
+    }
+
     @Id
     @SequenceGenerator(
             name = "guide_sequence",
@@ -55,7 +66,7 @@ public class GuideEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "guideEntity", targetEntity = ExcursionEntity.class)
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "guideEntity", targetEntity = ExcursionEntity.class)
     public List<ExcursionEntity> getExcursionEntityList() {
         return excursionEntityList;
     }

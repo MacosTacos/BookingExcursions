@@ -12,7 +12,21 @@ public class RouteEntity {
     private String finishAddress;
     private Integer length;
     private String info;
+    private Boolean relevance; //является ли маршрут актуальным, используемым в данный момент для экскурсий
     private List<ExcursionEntity> excursionEntityList;
+
+    public RouteEntity(Long id, String startAddress, String finishAddress, Integer length, String info, Boolean relevance, List<ExcursionEntity> excursionEntityList) {
+        this.id = id;
+        this.startAddress = startAddress;
+        this.finishAddress = finishAddress;
+        this.length = length;
+        this.info = info;
+        this.relevance = relevance;
+        this.excursionEntityList = excursionEntityList;
+    }
+
+    public RouteEntity() {
+    }
 
     @Id
     @SequenceGenerator(
@@ -65,7 +79,15 @@ public class RouteEntity {
         this.info = info;
     }
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "routeEntity", targetEntity = ExcursionEntity.class)
+    public Boolean getRelevance() {
+        return relevance;
+    }
+
+    public void setRelevance(Boolean relevance) {
+        this.relevance = relevance;
+    }
+
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "routeEntity", targetEntity = ExcursionEntity.class)
     public List<ExcursionEntity> getExcursionEntityList() {
         return excursionEntityList;
     }

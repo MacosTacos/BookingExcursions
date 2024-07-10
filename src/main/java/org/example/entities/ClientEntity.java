@@ -14,6 +14,18 @@ public class ClientEntity {
     private String phoneNumber;
     private List<BookingEntity> bookingEntityList;
 
+    public ClientEntity(Long id, String name, String surname, String email, String phoneNumber, List<BookingEntity> bookingEntityList) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.bookingEntityList = bookingEntityList;
+    }
+
+    public ClientEntity() {
+    }
+
     @Id
     @SequenceGenerator(
             name = "client_sequence",
@@ -64,7 +76,7 @@ public class ClientEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = BookingEntity.class, mappedBy = "clientEntity")
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = BookingEntity.class, mappedBy = "clientEntity")
     public List<BookingEntity> getBookingEntityList() {
         return bookingEntityList;
     }

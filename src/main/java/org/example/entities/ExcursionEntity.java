@@ -12,8 +12,18 @@ public class ExcursionEntity {
     private LocalDateTime date;
     private GuideEntity guideEntity;
     private RouteEntity routeEntity;
-
     private List<BookingEntity> bookingEntityList;
+
+    public ExcursionEntity(Long id, LocalDateTime date, GuideEntity guideEntity, RouteEntity routeEntity, List<BookingEntity> bookingEntityList) {
+        this.id = id;
+        this.date = date;
+        this.guideEntity = guideEntity;
+        this.routeEntity = routeEntity;
+        this.bookingEntityList = bookingEntityList;
+    }
+
+    public ExcursionEntity() {
+    }
 
     @Id
     @SequenceGenerator(
@@ -41,8 +51,8 @@ public class ExcursionEntity {
         this.date = date;
     }
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = GuideEntity.class)
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = GuideEntity.class)
+    @JoinColumn(name = "guide_id")
     public GuideEntity getGuideEntity() {
         return guideEntity;
     }
@@ -51,7 +61,8 @@ public class ExcursionEntity {
         this.guideEntity = guideEntity;
     }
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = RouteEntity.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = RouteEntity.class)
+    @JoinColumn(name = "route_id")
     public RouteEntity getRouteEntity() {
         return routeEntity;
     }
@@ -60,7 +71,7 @@ public class ExcursionEntity {
         this.routeEntity = routeEntity;
     }
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = BookingEntity.class, mappedBy = "excursionEntity")
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = BookingEntity.class, mappedBy = "excursionEntity")
     public List<BookingEntity> getBookingEntityList() {
         return bookingEntityList;
     }
