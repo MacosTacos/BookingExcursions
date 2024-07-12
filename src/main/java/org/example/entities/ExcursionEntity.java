@@ -7,40 +7,28 @@ import java.util.List;
 
 @Entity
 @Table(name = "excursions")
-public class ExcursionEntity {
-    private Long id;
+public class ExcursionEntity extends BaseEntity {
     private LocalDateTime date;
     private GuideEntity guideEntity;
     private RouteEntity routeEntity;
     private List<BookingEntity> bookingEntityList;
 
-    public ExcursionEntity(Long id, LocalDateTime date, GuideEntity guideEntity, RouteEntity routeEntity, List<BookingEntity> bookingEntityList) {
-        this.id = id;
+    private AdministratorEntity administratorEntity;
+
+    public ExcursionEntity(LocalDateTime date,
+                           GuideEntity guideEntity,
+                           RouteEntity routeEntity,
+                           List<BookingEntity> bookingEntityList,
+                           AdministratorEntity administratorEntity
+    ) {
         this.date = date;
         this.guideEntity = guideEntity;
         this.routeEntity = routeEntity;
         this.bookingEntityList = bookingEntityList;
+        this.administratorEntity = administratorEntity;
     }
 
-    public ExcursionEntity() {
-    }
-
-    @Id
-    @SequenceGenerator(
-            name = "excursion_sequence",
-            sequenceName = "excursion_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "excursion_sequence"
-    )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    protected ExcursionEntity() {
     }
 
     public LocalDateTime getDate() {
@@ -78,5 +66,15 @@ public class ExcursionEntity {
 
     public void setBookingEntityList(List<BookingEntity> bookingEntityList) {
         this.bookingEntityList = bookingEntityList;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = AdministratorEntity.class)
+    @JoinColumn(name = "administrator_id")
+    public AdministratorEntity getAdministratorEntity() {
+        return administratorEntity;
+    }
+
+    public void setAdministratorEntity(AdministratorEntity administratorEntity) {
+        this.administratorEntity = administratorEntity;
     }
 }

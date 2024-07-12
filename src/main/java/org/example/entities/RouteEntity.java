@@ -6,8 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "routes")
-public class RouteEntity {
-    private Long id;
+public class RouteEntity extends BaseEntity {
     private String startAddress;
     private String finishAddress;
     private Integer length;
@@ -15,8 +14,7 @@ public class RouteEntity {
     private Boolean relevance; //является ли маршрут актуальным, используемым в данный момент для экскурсий
     private List<ExcursionEntity> excursionEntityList;
 
-    public RouteEntity(Long id, String startAddress, String finishAddress, Integer length, String info, Boolean relevance, List<ExcursionEntity> excursionEntityList) {
-        this.id = id;
+    public RouteEntity(String startAddress, String finishAddress, Integer length, String info, Boolean relevance, List<ExcursionEntity> excursionEntityList) {
         this.startAddress = startAddress;
         this.finishAddress = finishAddress;
         this.length = length;
@@ -25,27 +23,10 @@ public class RouteEntity {
         this.excursionEntityList = excursionEntityList;
     }
 
-    public RouteEntity() {
+    protected RouteEntity() {
     }
 
-    @Id
-    @SequenceGenerator(
-            name = "route_sequence",
-            sequenceName = "route_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "route_sequence"
-    )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Column(name = "start_address")
     public String getStartAddress() {
         return startAddress;
     }
@@ -54,6 +35,7 @@ public class RouteEntity {
         this.startAddress = startAddress;
     }
 
+    @Column(name = "finish_address")
     public String getFinishAddress() {
         return finishAddress;
     }

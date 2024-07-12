@@ -6,16 +6,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "clients")
-public class ClientEntity {
-    private Long id;
+public class ClientEntity extends BaseEntity {
     private String name;
     private String surname;
     private String email;
     private String phoneNumber;
     private List<BookingEntity> bookingEntityList;
 
-    public ClientEntity(Long id, String name, String surname, String email, String phoneNumber, List<BookingEntity> bookingEntityList) {
-        this.id = id;
+    public ClientEntity(String name, String surname, String email, String phoneNumber, List<BookingEntity> bookingEntityList) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -23,25 +21,7 @@ public class ClientEntity {
         this.bookingEntityList = bookingEntityList;
     }
 
-    public ClientEntity() {
-    }
-
-    @Id
-    @SequenceGenerator(
-            name = "client_sequence",
-            sequenceName = "client_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "client_sequence"
-    )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    protected ClientEntity() {
     }
 
     public String getName() {
@@ -68,6 +48,7 @@ public class ClientEntity {
         this.email = email;
     }
 
+    @Column(name = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
     }

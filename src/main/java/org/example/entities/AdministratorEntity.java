@@ -6,40 +6,21 @@ import java.util.List;
 
 @Entity
 @Table(name = "administrators")
-public class AdministratorEntity {
-    private Long id;
+public class AdministratorEntity extends BaseEntity {
     private String name;
     private String surname;
     private String phoneNumber;
     private List<BookingEntity> bookingEntityList;
+    private List<ExcursionEntity> excursionEntityList;
 
-    public AdministratorEntity(Long id, String name, String surname, String phoneNumber, List<BookingEntity> bookingEntityList) {
-        this.id = id;
+    public AdministratorEntity(String name, String surname, String phoneNumber, List<BookingEntity> bookingEntityList) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.bookingEntityList = bookingEntityList;
     }
 
-    public AdministratorEntity() {
-    }
-
-    @Id
-    @SequenceGenerator(
-            name = "admin_sequence",
-            sequenceName = "admin_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "admin_sequence"
-    )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    protected AdministratorEntity() {
     }
 
     public String getName() {
@@ -58,6 +39,7 @@ public class AdministratorEntity {
         this.surname = surname;
     }
 
+    @Column(name = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -73,5 +55,14 @@ public class AdministratorEntity {
 
     public void setBookingEntityList(List<BookingEntity> bookingEntityList) {
         this.bookingEntityList = bookingEntityList;
+    }
+
+    @OneToMany(mappedBy = "administratorEntity", fetch = FetchType.LAZY, cascade = CascadeType.DETACH, targetEntity = ExcursionEntity.class)
+    public List<ExcursionEntity> getExcursionEntityList() {
+        return excursionEntityList;
+    }
+
+    public void setExcursionEntityList(List<ExcursionEntity> excursionEntityList) {
+        this.excursionEntityList = excursionEntityList;
     }
 }

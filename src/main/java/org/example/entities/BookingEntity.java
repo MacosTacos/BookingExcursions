@@ -1,42 +1,29 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
-import org.example.entities.ids.BookingId;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bookings")
-public class BookingEntity {
-
-    private BookingId id;
+public class BookingEntity extends BaseEntity {
     private ClientEntity clientEntity;
     private ExcursionEntity excursionEntity;
     private LocalDateTime bookingDate;
     private AdministratorEntity administratorEntity;
 
-    public BookingEntity(BookingId id, ClientEntity clientEntity, ExcursionEntity excursionEntity, LocalDateTime bookingDate, AdministratorEntity administratorEntity) {
-        this.id = id;
+    public BookingEntity(ClientEntity clientEntity, ExcursionEntity excursionEntity, LocalDateTime bookingDate, AdministratorEntity administratorEntity) {
         this.clientEntity = clientEntity;
         this.excursionEntity = excursionEntity;
         this.bookingDate = bookingDate;
         this.administratorEntity = administratorEntity;
     }
 
-    public BookingEntity() {
-    }
-
-    @EmbeddedId
-    public BookingId getId() {
-        return id;
-    }
-
-    public void setId(BookingId id) {
-        this.id = id;
+    protected BookingEntity() {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = ClientEntity.class)
-    @MapsId("clientId")
+    @JoinColumn(name = "client_id")
     public ClientEntity getClientEntity() {
         return clientEntity;
     }
@@ -45,7 +32,7 @@ public class BookingEntity {
         this.clientEntity = clientEntity;
     }
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = ExcursionEntity.class)
-    @MapsId("excursionId")
+    @JoinColumn(name = "excursion_id")
     public ExcursionEntity getExcursionEntity() {
         return excursionEntity;
     }
@@ -54,6 +41,7 @@ public class BookingEntity {
         this.excursionEntity = excursionEntity;
     }
 
+    @Column(name = "booking_date")
     public LocalDateTime getBookingDate() {
         return bookingDate;
     }

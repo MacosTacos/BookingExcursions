@@ -6,40 +6,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "guides")
-public class GuideEntity {
-    private Long id;
+public class GuideEntity extends BaseEntity {
     private String name;
     private String surname;
     private String phoneNumber;
     private List<ExcursionEntity> excursionEntityList;
 
-    public GuideEntity(Long id, String name, String surname, String phoneNumber, List<ExcursionEntity> excursionEntityList) {
-        this.id = id;
+    public GuideEntity(String name, String surname, String phoneNumber, List<ExcursionEntity> excursionEntityList) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.excursionEntityList = excursionEntityList;
     }
 
-    public GuideEntity() {
-    }
-
-    @Id
-    @SequenceGenerator(
-            name = "guide_sequence",
-            sequenceName = "guide_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "guide_sequence"
-    )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    protected GuideEntity() {
     }
 
     public String getName() {
@@ -58,6 +38,7 @@ public class GuideEntity {
         this.surname = surname;
     }
 
+    @Column(name = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
     }
