@@ -11,21 +11,28 @@ public class ExcursionEntity extends BaseEntity {
     private LocalDateTime date;
     private GuideEntity guideEntity;
     private RouteEntity routeEntity;
+    private Integer slots;
     private List<BookingEntity> bookingEntityList;
 
     private AdministratorEntity administratorEntity;
 
+    private List<ExcursionTypeEntity> excursionTypeEntityList;
+
     public ExcursionEntity(LocalDateTime date,
                            GuideEntity guideEntity,
                            RouteEntity routeEntity,
+                           Integer slots,
                            List<BookingEntity> bookingEntityList,
-                           AdministratorEntity administratorEntity
+                           AdministratorEntity administratorEntity,
+                           List<ExcursionTypeEntity> excursionTypeEntityList
     ) {
         this.date = date;
         this.guideEntity = guideEntity;
         this.routeEntity = routeEntity;
+        this.slots = slots;
         this.bookingEntityList = bookingEntityList;
         this.administratorEntity = administratorEntity;
+        this.excursionTypeEntityList = excursionTypeEntityList;
     }
 
     protected ExcursionEntity() {
@@ -59,6 +66,14 @@ public class ExcursionEntity extends BaseEntity {
         this.routeEntity = routeEntity;
     }
 
+    public Integer getSlots() {
+        return slots;
+    }
+
+    public void setSlots(Integer slots) {
+        this.slots = slots;
+    }
+
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = BookingEntity.class, mappedBy = "excursionEntity")
     public List<BookingEntity> getBookingEntityList() {
         return bookingEntityList;
@@ -76,5 +91,16 @@ public class ExcursionEntity extends BaseEntity {
 
     public void setAdministratorEntity(AdministratorEntity administratorEntity) {
         this.administratorEntity = administratorEntity;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "excursions_excursion_types", joinColumns = @JoinColumn(name = "excursion_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "excursion_type_id", referencedColumnName = "id"))
+    public List<ExcursionTypeEntity> getExcursionTypeEntityList() {
+        return excursionTypeEntityList;
+    }
+
+    public void setExcursionTypeEntityList(List<ExcursionTypeEntity> excursionTypeEntityList) {
+        this.excursionTypeEntityList = excursionTypeEntityList;
     }
 }
