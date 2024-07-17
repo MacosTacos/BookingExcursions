@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,6 @@ public class ExcursionEntity extends BaseEntity {
     private Integer slots;
     private List<BookingEntity> bookingEntityList;
 
-    private AdministratorEntity administratorEntity;
-
     private List<ExcursionTypeEntity> excursionTypeEntityList;
 
     public ExcursionEntity(LocalDateTime date,
@@ -23,7 +22,6 @@ public class ExcursionEntity extends BaseEntity {
                            RouteEntity routeEntity,
                            Integer slots,
                            List<BookingEntity> bookingEntityList,
-                           AdministratorEntity administratorEntity,
                            List<ExcursionTypeEntity> excursionTypeEntityList
     ) {
         this.date = date;
@@ -31,7 +29,6 @@ public class ExcursionEntity extends BaseEntity {
         this.routeEntity = routeEntity;
         this.slots = slots;
         this.bookingEntityList = bookingEntityList;
-        this.administratorEntity = administratorEntity;
         this.excursionTypeEntityList = excursionTypeEntityList;
     }
 
@@ -83,19 +80,9 @@ public class ExcursionEntity extends BaseEntity {
         this.bookingEntityList = bookingEntityList;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = AdministratorEntity.class)
-    @JoinColumn(name = "administrator_id")
-    public AdministratorEntity getAdministratorEntity() {
-        return administratorEntity;
-    }
-
-    public void setAdministratorEntity(AdministratorEntity administratorEntity) {
-        this.administratorEntity = administratorEntity;
-    }
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "excursions_excursion_types", joinColumns = @JoinColumn(name = "excursion_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "excursion_type_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "excursion_type_id", referencedColumnName = "id"))
     public List<ExcursionTypeEntity> getExcursionTypeEntityList() {
         return excursionTypeEntityList;
     }

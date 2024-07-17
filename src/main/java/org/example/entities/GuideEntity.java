@@ -10,6 +10,8 @@ public class GuideEntity extends BaseEntity {
     private String name;
     private String surname;
     private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    private GuideStatus guideStatus;
     private List<ExcursionEntity> excursionEntityList;
 
     public GuideEntity(String name, String surname, String phoneNumber, List<ExcursionEntity> excursionEntityList) {
@@ -45,6 +47,14 @@ public class GuideEntity extends BaseEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public GuideStatus getGuideStatus() {
+        return guideStatus;
+    }
+
+    public void setGuideStatus(GuideStatus guideStatus) {
+        this.guideStatus = guideStatus;
     }
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "guideEntity", targetEntity = ExcursionEntity.class)

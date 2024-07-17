@@ -7,5 +7,5 @@ import org.example.entities.ExcursionEntity;
 import java.util.List;
 
 public interface ExcursionRecommendService {
-    List<ExcursionEntity> recommendExcursions(ClientDTO clientDTO);
+    List<ExcursionDTO> recommendExcursions(ClientDTO clientDTO);
 }

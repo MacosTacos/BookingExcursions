@@ -6,6 +6,4 @@ import org.springframework.data.repository.query.Param;
 
 public interface ClientRepository extends GeneralRepository<ClientEntity, Long> {
 
-    ClientEntity findById(Long id);
-
 }

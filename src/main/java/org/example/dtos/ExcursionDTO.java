@@ -1,16 +1,43 @@
 package org.example.dtos;
 
-import org.example.entities.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class ExcursionDTO {
-    private Long id;
     private LocalDateTime date;
-    private GuideEntity guideEntity;
-    private RouteEntity routeEntity;
-    private Integer slots;
-    private List<BookingEntity> bookingEntityList;
-    private List<ExcursionTypeEntity> excursionTypeEntityList;
+    private String startAddress;
+    private String finishAddress;
+    private Integer length;
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getStartAddress() {
+        return startAddress;
+    }
+
+    public void setStartAddress(String startAddress) {
+        this.startAddress = startAddress;
+    }
+
+    public String getFinishAddress() {
+        return finishAddress;
+    }
+
+    public void setFinishAddress(String finishAddress) {
+        this.finishAddress = finishAddress;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
 }

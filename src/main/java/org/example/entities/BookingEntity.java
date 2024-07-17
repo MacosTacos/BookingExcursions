@@ -10,13 +10,11 @@ public class BookingEntity extends BaseEntity {
     private ClientEntity clientEntity;
     private ExcursionEntity excursionEntity;
     private LocalDateTime bookingDate;
-    private AdministratorEntity administratorEntity;
 
-    public BookingEntity(ClientEntity clientEntity, ExcursionEntity excursionEntity, LocalDateTime bookingDate, AdministratorEntity administratorEntity) {
+    public BookingEntity(ClientEntity clientEntity, ExcursionEntity excursionEntity, LocalDateTime bookingDate) {
         this.clientEntity = clientEntity;
         this.excursionEntity = excursionEntity;
         this.bookingDate = bookingDate;
-        this.administratorEntity = administratorEntity;
     }
 
     protected BookingEntity() {
@@ -50,14 +48,6 @@ public class BookingEntity extends BaseEntity {
         this.bookingDate = bookingDate;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = AdministratorEntity.class)
-    @JoinColumn(name = "admin_id")
-    public AdministratorEntity getAdministratorEntity() {
-        return administratorEntity;
-    }
-
-    public void setAdministratorEntity(AdministratorEntity administratorEntity) {
-        this.administratorEntity = administratorEntity;
-    }
 }
+
 
